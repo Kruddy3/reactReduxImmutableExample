@@ -77,8 +77,8 @@ export default class LeftNav extends Component {
         if (TodoTasks) {
           return (
             <Card>
-              <CardText className={todoItemHolder[1][iterator].toString()} data-id={iterator++} onClick={this.handleClick.bind(this)}>
-                <FloatingActionButton secondary mini className="deleteButton" data-id={iterator} onClick={this.deleteThis.bind(this)}>
+              <CardText className={todoItemHolder[1][iterator].toString()} data-id={iterator} onClick={this.handleClick.bind(this)}>
+                <FloatingActionButton secondary mini className="deleteButton" data-id={iterator++} onClick={this.deleteThis.bind(this)}>
                   x
                 </FloatingActionButton>
                   {TodoTasks}
