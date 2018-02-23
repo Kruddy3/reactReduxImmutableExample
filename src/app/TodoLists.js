@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Immutable from 'immutable';
 import { store } from './store/store.js';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 const styles = {
 
@@ -33,6 +34,14 @@ export default class ListBody extends Component {
     this.deleteThis = this.deleteThis.bind(this);
     this.addList = this.addList.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.inputValid = this.inputValid.bind(this);
+
+  }
+  inputValid(){
+    if (this.state.listName.length > 0) {
+      return false
+    }
+    return true;
   }
   handleClick(e) {
     this.currentlyViewingChanger(e.currentTarget.dataset.id);
@@ -42,6 +51,9 @@ export default class ListBody extends Component {
       store.dispatch({
         type: 'NEWTODOLIST', name: this.state.listName,
       });
+      if (true) {
+
+      }
     }
     this.setState({ listName: '' });
   }
@@ -57,8 +69,16 @@ export default class ListBody extends Component {
       });
     }
   }
+  componentDidMount(){
+    store.dispatch({
+      type: 'UPDATECURRENTLYVIEWING', whatViewing: location.pathname.split("/")[1],
+    });
+  }
   deleteThis(e) {
     this.state.open = true;
+    if (store.getState().currentViewing == e.currentTarget.dataset.id) {
+      console.log('case');
+    }
     store.dispatch({
       type: 'REMTODOLIST', name: e.currentTarget.dataset.id,
     });
@@ -71,32 +91,36 @@ export default class ListBody extends Component {
     todoListNameHolder = this.props.value.map((iteratedTodoList) => {
       if (iteratedTodoList == store.getState().currentViewing) {
         return (<span>
+          <Link to={`/${iteratedTodoList}`}>
           <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'red', overflow: 'hidden' }}>
-            <FloatingActionButton secondary mini data-id={iteratedTodoList} onClick={this.deleteThis.bind(this)}>
-                x
-            </FloatingActionButton>
             <h2>
               {iteratedTodoList}
             </h2>
           </MenuItem>
+          </Link>
         </span>
         );
       }
       return (<span>
+        <Link to={`/${iteratedTodoList}`}>
         <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'black', overflow: 'hidden' }}>
-          <FloatingActionButton secondary mini data-id={iteratedTodoList} onClick={this.deleteThis.bind(this)}>x</FloatingActionButton>
           <h2>
             {iteratedTodoList}
           </h2>
         </MenuItem>
+        </Link>
       </span>
       );
     });
-    return (<MuiThemeProvider muiTheme={muiTheme}>
-      <ul className="NAVBAR"> <RaisedButton label="add Todo list" onClick={this.addList.bind(this)} className="addButton" />
-        <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
-        {todoListNameHolder}
-      </ul>
-            </MuiThemeProvider>);
+    return (<Router>
+      <span>
+      <MuiThemeProvider muiTheme={muiTheme}>
+          <ul className="NAVBAR"> <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="addButton" />
+            <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
+            {todoListNameHolder}
+          </ul>
+          </MuiThemeProvider>
+        </span>
+          </Router>);
   }
 }

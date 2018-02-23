@@ -11,6 +11,7 @@ const config = {
       './src/app/app.js',
     ],
   },
+  devtool: 'source-map',
   // Server Configuration options
   devServer: {
     contentBase: 'src/www', // Relative directory for base of server
@@ -18,6 +19,7 @@ const config = {
     inline: true,
     port: 3000, // Port Number
     host: 'localhost', // Change to '0.0.0.0' for external facing server
+    historyApiFallback: true
   },
   devtool: 'eval',
   output: {

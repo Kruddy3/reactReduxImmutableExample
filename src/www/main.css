@@ -29,6 +29,15 @@ ul{
 .true{
   text-decoration: line-through;
 }
-FloatingActionButton{
-  {vertical-align:middle}
+.button{
+  float:right;
+
+}
+.deleteButton{
+  position: relative;
+  top: -5px;
+}
+.selectedListBtn{
+  position: relative;
+  top: 10px;
 }
