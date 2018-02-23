@@ -1,0 +1,43 @@
+html {
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+  width: 100%;
+
+}
+
+body {
+  font-size: 13px;
+  line-height: 20px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+h2{
+  display: inline-block;
+}
+ul{
+  padding: 0;
+  margin: 0;
+}
+.false{
+  text-decoration: none;
+}
+.true{
+  text-decoration: line-through;
+}
+.button{
+  float:right;
+
+}
+.deleteButton{
+  position: relative;
+  top: -5px;
+}
+.selectedListBtn{
+  position: relative;
+  top: 10px;
+}
