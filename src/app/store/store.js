@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import { loadState, saveState } from '../loadState'
 
 
-const todoListManager = (state = { currentViewing: '', toDoLists: { todoname: [], reactReduxImmutableExample: [{ todo: 'publish to github', completed: true }, { todo: 'reinvent google', completed: false }, { todo: 'put radio on the internet', completed: true }] } }, action) => {
+const todoListManager = (state = { currentViewing: '', toDoLists: {  'react Example': [{ todo: 'publish to github', completed: true }, { todo: 'reinvent google', completed: false }, { todo: 'put radio on the internet', completed: true }], 'todo name': [] } }, action) => {
   let immutableStore = Immutable.fromJS(state);
   switch (action.type) {
     case 'NEWTODOLIST':
