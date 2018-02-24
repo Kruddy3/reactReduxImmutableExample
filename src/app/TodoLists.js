@@ -67,7 +67,7 @@ export default class ListBody extends Component {
   }
   componentDidMount(){
     store.dispatch({
-      type: 'UPDATECURRENTLYVIEWING', whatViewing: location.pathname.split("/")[1],
+      type: 'UPDATECURRENTLYVIEWING', whatViewing: location.pathname.split("/")[2],
     });
   }
   deleteThis(e) {
@@ -87,7 +87,7 @@ export default class ListBody extends Component {
     todoListNameHolder = this.props.value.map((iteratedTodoList) => {
       if (iteratedTodoList == store.getState().currentViewing) {
         return (<span>
-          <Link to={`/${iteratedTodoList}`}>
+          <Link to={`/reactReduxImmutableExample/${iteratedTodoList}`}>
           <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'red', overflow: 'hidden' }}>
             <h2>
               {iteratedTodoList}
@@ -98,7 +98,7 @@ export default class ListBody extends Component {
         );
       }
       return (<span>
-        <Link to={`/${iteratedTodoList}`}>
+        <Link to={`/reactReduxImmutableExample/${iteratedTodoList}`}>
         <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'black', overflow: 'hidden' }}>
           <h2>
             {iteratedTodoList}
