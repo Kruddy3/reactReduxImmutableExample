@@ -1,4 +1,6 @@
 import Immutable from 'immutable';
+import { loadState, saveState } from '../loadState'
+
 
 const todoListManager = (state = { currentViewing: '', toDoLists: { todoname: [], todoname2: [{ todo: 'brush Teeth', completed: false }, { todo: 'brush Teeths', completed: false }, { todo: 'brush Teethss', completed: false }] } }, action) => {
   let immutableStore = Immutable.fromJS(state);
@@ -38,6 +40,9 @@ const todoListManager = (state = { currentViewing: '', toDoLists: { todoname: []
 };
 import { createStore } from 'redux';
 
-const store = createStore(todoListManager);
-
+const persistedState = loadState();
+const store = createStore(todoListManager, loadState());
+store.subscribe(() => {
+  saveState(store.getState())
+})
 export { store };

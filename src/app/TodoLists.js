@@ -11,10 +11,6 @@ import Immutable from 'immutable';
 import { store } from './store/store.js';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-const styles = {
-
-  margin: 12,
-};
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -115,8 +111,9 @@ export default class ListBody extends Component {
     return (<Router>
       <span>
       <MuiThemeProvider muiTheme={muiTheme}>
-          <ul className="NAVBAR"> <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="addButton" />
+          <ul className="NAVBAR">
             <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
+            <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="listAdd addButton" style={{width:'100%'}}/>
             {todoListNameHolder}
           </ul>
           </MuiThemeProvider>

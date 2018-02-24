@@ -6,6 +6,7 @@ import Items from './TodoListItems';
 import ReactDOM from 'react-dom';
 import { store } from './store/store.js';
 
+
 const renderLeftNav = () => {
   ReactDOM.render(
     <Todos
@@ -22,6 +23,8 @@ const renderListItems = () => {
     document.getElementById('mainBody'),
   );
 };
+
+
 
 store.subscribe(renderListItems);
 store.subscribe(renderLeftNav);
