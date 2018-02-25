@@ -6,15 +6,28 @@ import Items from './TodoListItems';
 import ReactDOM from 'react-dom';
 import { store } from './store/store.js';
 
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
+const TodoListsComponent = ( {match} ) => (
+  <Todos
+    value={Object.keys(store.getState().toDoLists)} urlId = {match.params.topicId}
+  />
+);
+
+const Test = (
+<Router>
+  <div>
+    <Route path="/reactReduxImmutableExample/:topicId" component={TodoListsComponent}/>
+  </div>
+</Router>)
 
 const renderLeftNav = () => {
   ReactDOM.render(
-    <Todos
-      value={Object.keys(store.getState().toDoLists)}
-    />,
+    Test,
     document.getElementById('leftNav'),
   );
 };
+
 const renderListItems = () => {
   ReactDOM.render(
     <Items

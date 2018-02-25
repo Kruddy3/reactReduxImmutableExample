@@ -31,7 +31,7 @@ export default class ListBody extends Component {
     this.addList = this.addList.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.inputValid = this.inputValid.bind(this);
-
+    // this.loading = this.loading.bind(this);
   }
   inputValid(){
     if (this.state.listName.length > 0) {
@@ -56,24 +56,35 @@ export default class ListBody extends Component {
   handleChange(e) {
     this.setState({ listName: e.target.value });
   }
+
+  componentDidMount(){
+    var currentUrlPath = this.props.urlId;
+    if (currentUrlPath in store.getState().toDoLists) {
+      store.dispatch({
+        type: 'UPDATECURRENTLYVIEWING', whatViewing: currentUrlPath,
+      });
+    } else {
+      store.dispatch({
+        type: 'UPDATECURRENTLYVIEWING', whatViewing: "",
+      })
+      this.forceUpdate()
+    }
+  }
+
   currentlyViewingChanger(e) {
     if (this.state.open) {
       this.state.open = false;
     } else {
+      this.forceUpdate()
       store.dispatch({
         type: 'UPDATECURRENTLYVIEWING', whatViewing: e,
       });
     }
   }
-  componentDidMount(){
-    store.dispatch({
-      type: 'UPDATECURRENTLYVIEWING', whatViewing: location.pathname.split("/")[2],
-    });
-  }
+
   deleteThis(e) {
     this.state.open = true;
     if (store.getState().currentViewing == e.currentTarget.dataset.id) {
-      console.log('case');
     }
     store.dispatch({
       type: 'REMTODOLIST', name: e.currentTarget.dataset.id,
@@ -83,6 +94,7 @@ export default class ListBody extends Component {
   // call that cuntion within MuiThemeProvider
 
   render() {
+    (() => this.loading().bind(this))
     let todoListNameHolder = '';
     todoListNameHolder = this.props.value.map((iteratedTodoList) => {
       if (iteratedTodoList == store.getState().currentViewing) {
@@ -109,15 +121,15 @@ export default class ListBody extends Component {
       );
     });
     return (<Router>
-      <span>
-      <MuiThemeProvider muiTheme={muiTheme}>
-          <ul className="NAVBAR">
-            <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
-            <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="listAdd addButton" style={{width:'100%'}}/>
-            {todoListNameHolder}
-          </ul>
-          </MuiThemeProvider>
-        </span>
-          </Router>);
-  }
+              <span>
+                <MuiThemeProvider muiTheme={muiTheme}>
+                  <ul className="NAVBAR">
+                    <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
+                    <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="listAdd addButton" style={{width:'100%'}}/>
+                    {todoListNameHolder}
+                  </ul>
+                </MuiThemeProvider>
+              </span>
+            </Router>);
+    }
 }

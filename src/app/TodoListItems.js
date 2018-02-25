@@ -101,7 +101,6 @@ export default class LeftNav extends Component {
     if (store.getState().currentViewing != '' && store.getState().currentViewing != undefined) {
       return (<Router>
         <span>
-          {/* <Route path={`/:Id`} component={Home} /> */}
           <MuiThemeProvider muiTheme={muiTheme}>
             <ul className="NAVBAR">
               <Card>
@@ -133,18 +132,4 @@ function test(e){
   store.dispatch({
     type: 'REMTODOLIST', name: e,
   });
-  console.log(e);
 }
-
-// REACT ROUTER DOESNT UPDATE THIS EVEN IF ITS CHANGED
-// function test(e){
-//   console.log(e);
-// }
-// const Home = ({ match }) => (
-//   <div>
-//     <Link to="/testing">
-//     <h2>{match.params.Id}</h2>
-//     </Link>
-//
-//   </div>
-// );
