@@ -9,7 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Immutable from 'immutable';
 import { store } from './store/store.js';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 
 const muiTheme = getMuiTheme({
@@ -33,9 +33,9 @@ export default class ListBody extends Component {
     this.inputValid = this.inputValid.bind(this);
     // this.loading = this.loading.bind(this);
   }
-  inputValid(){
+  inputValid() {
     if (this.state.listName.length > 0) {
-      return false
+      return false;
     }
     return true;
   }
@@ -47,27 +47,24 @@ export default class ListBody extends Component {
       store.dispatch({
         type: 'NEWTODOLIST', name: this.state.listName,
       });
-      if (true) {
-
-      }
     }
     this.setState({ listName: '' });
   }
   handleChange(e) {
     this.setState({ listName: e.target.value });
   }
-
-  componentDidMount(){
-    var currentUrlPath = this.props.urlId;
+  //
+  componentDidMount() {
+    const currentUrlPath = this.props.match.params.topicId;
+    console.log(currentUrlPath, store.getState());
     if (currentUrlPath in store.getState().toDoLists) {
       store.dispatch({
         type: 'UPDATECURRENTLYVIEWING', whatViewing: currentUrlPath,
       });
     } else {
       store.dispatch({
-        type: 'UPDATECURRENTLYVIEWING', whatViewing: "",
-      })
-      this.forceUpdate()
+        type: 'UPDATECURRENTLYVIEWING', whatViewing: '',
+      });
     }
   }
 
@@ -75,7 +72,6 @@ export default class ListBody extends Component {
     if (this.state.open) {
       this.state.open = false;
     } else {
-      this.forceUpdate()
       store.dispatch({
         type: 'UPDATECURRENTLYVIEWING', whatViewing: e,
       });
@@ -91,45 +87,43 @@ export default class ListBody extends Component {
     });
   }
 
-  // call that cuntion within MuiThemeProvider
-
   render() {
-    (() => this.loading().bind(this))
+    console.log('rendering');
     let todoListNameHolder = '';
-    todoListNameHolder = this.props.value.map((iteratedTodoList) => {
+    todoListNameHolder = Object.keys(store.getState().toDoLists).map((iteratedTodoList) => {
       if (iteratedTodoList == store.getState().currentViewing) {
         return (<span>
           <Link to={`/reactReduxImmutableExample/${iteratedTodoList}`}>
-          <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'red', overflow: 'hidden' }}>
-            <h2>
-              {iteratedTodoList}
-            </h2>
-          </MenuItem>
+            <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'red', overflow: 'hidden' }}>
+              <h2>
+                {iteratedTodoList}
+              </h2>
+            </MenuItem>
           </Link>
         </span>
         );
       }
       return (<span>
         <Link to={`/reactReduxImmutableExample/${iteratedTodoList}`}>
-        <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'black', overflow: 'hidden' }}>
-          <h2>
-            {iteratedTodoList}
-          </h2>
-        </MenuItem>
+          <MenuItem data-id={iteratedTodoList} onClick={this.handleClick.bind(this)} style={{ color: 'black', overflow: 'hidden' }}>
+            <h2>
+              {iteratedTodoList}
+            </h2>
+          </MenuItem>
         </Link>
       </span>
       );
     });
     return (<Router>
-              <span>
-                <MuiThemeProvider muiTheme={muiTheme}>
-                  <ul className="NAVBAR">
-                    <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
-                    <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="listAdd addButton" style={{width:'100%'}}/>
-                    {todoListNameHolder}
-                  </ul>
-                </MuiThemeProvider>
-              </span>
+      <span>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <ul className="NAVBAR">
+            <TextField floatingLabelText="Type Todo List Name Here" onChange={this.handleChange.bind(this)} className="todoListText"type="text" name="name" value={this.state.listName} />
+            <RaisedButton disabled={this.inputValid()} label="add Todo list" onClick={this.addList.bind(this)} className="listAdd addButton" style={{ width: '100%' }} />
+            {todoListNameHolder}
+          </ul>
+        </MuiThemeProvider>
+      </span>
             </Router>);
-    }
+  }
 }

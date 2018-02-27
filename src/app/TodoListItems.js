@@ -7,8 +7,7 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { store } from './store/store.js';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 
 const styles = {
@@ -39,9 +38,9 @@ export default class LeftNav extends Component {
       listName: '',
     };
   }
-  inputValid(){
+  inputValid() {
     if (this.state.listName.length > 0) {
-      return false
+      return false;
     }
     return true;
   }
@@ -91,7 +90,7 @@ export default class LeftNav extends Component {
                 <FloatingActionButton secondary mini className="deleteButton button" data-id={iterator++} onClick={this.deleteThis.bind(this)}>
                   x
                 </FloatingActionButton>
-                  {TodoTasks}
+                {TodoTasks}
               </CardText>
             </Card>
           );
@@ -104,7 +103,7 @@ export default class LeftNav extends Component {
           <MuiThemeProvider muiTheme={muiTheme}>
             <ul className="NAVBAR">
               <Card>
-                <CardText><FloatingActionButton className='button selectedListBtn' mini onClick={() => test(store.getState().currentViewing)}>x</FloatingActionButton>
+                <CardText><FloatingActionButton className="button selectedListBtn" mini onClick={() => test(store.getState().currentViewing)}>x</FloatingActionButton>
                   <h2>
                     {store.getState().currentViewing}
                   </h2>
@@ -113,22 +112,22 @@ export default class LeftNav extends Component {
 
               {todoListNameHolderForList}
               <RaisedButton disabled={this.inputValid()} onClick={this.addTodoItem.bind(this)} className="addButton" label="ADD TODO" />
-              <TextField onChange={this.handleChange.bind(this)} className="todoListText"  floatingLabelText="Type Todo Item Here" type="text" name="name" value={this.state.listName} />
+              <TextField onChange={this.handleChange.bind(this)} className="todoListText" floatingLabelText="Type Todo Item Here" type="text" name="name" value={this.state.listName} />
             </ul>
           </MuiThemeProvider>
         </span>
       </Router>);
     }
     return (<MuiThemeProvider muiTheme={muiTheme}>
-              <Card>
-                <CardText>
+      <Card>
+        <CardText>
                   No List is selected
-                </CardText>
-              </Card>
+        </CardText>
+      </Card>
             </MuiThemeProvider>);
   }
 }
-function test(e){
+function test(e) {
   store.dispatch({
     type: 'REMTODOLIST', name: e,
   });

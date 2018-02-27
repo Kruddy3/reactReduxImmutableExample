@@ -8,22 +8,13 @@ import { store } from './store/store.js';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-const TodoListsComponent = ( {match} ) => (
-  <Todos
-    value={Object.keys(store.getState().toDoLists)} urlId = {match.params.topicId}
-  />
-);
-
-const Test = (
-<Router>
-  <div>
-    <Route path="/reactReduxImmutableExample/:topicId" component={TodoListsComponent}/>
-  </div>
-</Router>)
-
 const renderLeftNav = () => {
   ReactDOM.render(
-    Test,
+    <Router>
+      <div>
+        <Route path="/reactReduxImmutableExample/:topicId" component={Todos}/>
+      </div>
+    </Router>,
     document.getElementById('leftNav'),
   );
 };
