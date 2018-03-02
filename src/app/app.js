@@ -5,14 +5,15 @@ import Todos from './TodoLists'; // Our custom react component
 import Items from './TodoListItems';
 import ReactDOM from 'react-dom';
 import { store } from './store/store.js';
-
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import TodoWrapper from './todoListWrapper';
+import ItemsWrapper from './ItemsWrapper';
 
 const renderLeftNav = () => {
   ReactDOM.render(
     <Router>
       <div>
-        <Route path="/reactReduxImmutableExample/:topicId" component={Todos}/>
+        <Route path="/reactReduxImmutableExample/:topicId" component={TodoWrapper}/>
       </div>
     </Router>,
     document.getElementById('leftNav'),
@@ -21,9 +22,7 @@ const renderLeftNav = () => {
 
 const renderListItems = () => {
   ReactDOM.render(
-    <Items
-      value={store.getState().currentViewing}
-    />,
+    <ItemsWrapper />,
     document.getElementById('mainBody'),
   );
 };
